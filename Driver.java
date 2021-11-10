@@ -25,11 +25,5 @@ public class Driver {
         
         List<Point> points = new ArrayList<>();
         Point cur = null;
-
-        while (eventReader.hasNext()) {
-            XMLEvent = evenRead.nextEvent();
-        }
-
-        System.out.println("Hello");
     }
 }
