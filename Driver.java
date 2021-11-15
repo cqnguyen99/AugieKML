@@ -1,3 +1,5 @@
+import component.*;
+
 import java.io.*;
 import java.util.*;
 
