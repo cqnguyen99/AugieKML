@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>1906 Epicenter</name>
+	<LookAt>
+		<longitude>-122.519558286717</longitude>
+		<latitude>37.70815901900136</latitude>
+		<altitude>0</altitude>
+		<heading>-7.550728928399852e-15</heading>
+		<tilt>59.03699990412559</tilt>
+		<range>24976.99106544798</range>
+	</LookAt>
+	<Style id="khStyle33517">
+		<IconStyle id="khIconStyle33518">
+			<color>ff00ffff</color>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pal4/icon56.png</href>
+				<y>128</y>
+				<w>32</w>
+				<h>32</h>
+			</Icon>
+		</IconStyle>
+		<LabelStyle id="khLabelStyle33520">
+			<color>ff00ffff</color>
+			<scale>1.1</scale>
+		</LabelStyle>
+	</Style>
+	<Placemark id="khPlacemark35403">
+		<name>Epicenter, April 18, 1906 5:12 am</name>
+		<description><![CDATA[<p>
+N 37.75 degrees latitude <br> 
+W 122.55 degrees longitude <br>
+(Uncertainty: +/- 7 km along the San Andreas fault; +/- 2.5 km perpendicular to the San Andreas fault) <br>
+Depth of 8 km (+/- 5 km uncertainty) </br>
+For more information: <a href="http://alomax.free.fr/posters/1906-focus/">Lomax: Location of Hypocenter of the 1906 Earthquake</a>
+</p>]]></description>
+		<LookAt id="khLookAt44581">
+			<longitude>-122.5562612310497</longitude>
+			<latitude>37.75210663277971</latitude>
+			<altitude>0</altitude>
+			<heading>-30.14567850490814</heading>
+			<tilt>0.1686448010673886</tilt>
+			<range>5237.373706517737</range>
+		</LookAt>
+		<styleUrl>#khStyle33517</styleUrl>
+		<Style id="khStyle44582">
+			<IconStyle id="khIconStyle44583">
+				<Icon>
+					<href>http://maps.google.com/mapfiles/kml/pal4/icon56.png</href>
+					<gx:x>0</gx:x>
+					<gx:y>0</gx:y>
+					<gx:w>-1</gx:w>
+					<gx:h>-1</gx:h>
+					<x>32</x>
+					<y>128</y>
+					<w>32</w>
+					<h>32</h>
+				</Icon>
+			</IconStyle>
+		</Style>
+		<Point id="khPoint44589">
+			<extrude>1</extrude>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-122.5541663672162,37.74909906113798,937</coordinates>
+		</Point>
+	</Placemark>
+	<GroundOverlay id="khGroundOverlay36981">
+		<name>Epicenter Circle</name>
+		<Icon>
+			<href>epicenter.png</href>
+			<viewBoundScale>0.75</viewBoundScale>
+		</Icon>
+		<LatLonBox id="khLatLonBox36983">
+			<north>37.75185477526593</north>
+			<south>37.74639078811752</south>
+			<east>-122.551001966052</east>
+			<west>-122.5581525841976</west>
+		</LatLonBox>
+	</GroundOverlay>
+	<ScreenOverlay id="khScreenOverlay44658">
+		<name>USGS Logo</name>
+		<Icon>
+			<href>USGSlogo_2.png</href>
+		</Icon>
+		<overlayXY x="0" y="1" xunits="pixels" yunits="fraction"/>
+		<screenXY x="15" y="0.985" xunits="pixels" yunits="fraction"/>
+		<rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+		<size x="0" y="0" xunits="fraction" yunits="fraction"/>
+	</ScreenOverlay>
+</Document>
+</kml>
