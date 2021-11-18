@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+  <Document>
+    <Placemark>
+      <Point>
+        <coordinates>
+-135,50,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <Polygon>
+        <altitudeMode>absolute</altitudeMode>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+-135,50,300000 -135,40,450000 -80,40,450000 -80,50,300000 -135,50,300000
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <LinearRing>
+        <coordinates>
+-135,50,0 -135,40,0
+        </coordinates>
+      </LinearRing>
+    </Placemark>
+  </Document>
+</kml>
