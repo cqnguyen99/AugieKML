@@ -1,4 +1,7 @@
+package component;
+
 import java.util.*;
+
 public class Polygon
 {
     private Point startP;
