@@ -1,6 +1,7 @@
+import component.*;
+
 import java.io.*;
 import java.util.*;
-//import java.awt.component;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -22,7 +23,7 @@ public class Driver {
         // Initializing the handler to access the tags in the XML file
         XMLEventReader eventReader = factory.createXMLEventReader(new FileReader(file));
         
-        List<Point> points = new ArrayList();
+        List<Point> points = new ArrayList<>();
         Point point = new Point();
         Point startP = new Point();
         Point endP = new Point();
@@ -41,7 +42,7 @@ public class Driver {
                     Characters nameDataEvent = (Characters)eventReader.nextEvent();
                     current.append(nameDataEvent.getData());
                     String[] coords = current.toString().split(" ");
-                    List<String> coordsCopy = new ArrayList();
+                    List<String> coordsCopy = new ArrayList<>();
                     for(int i = 0; i < coords.length; i++) {
                         if(coords[i].isBlank()) {
                             coordsCopy.add(coords[++i]);
