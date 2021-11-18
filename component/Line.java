@@ -1,4 +1,4 @@
-package component;
+//package component;
 
 import java.util.*;
 import java.io.*;
@@ -14,6 +14,14 @@ public class Line {
 
     public String toString() {
         return startP.toString()+ " to " + endP.toString();
+    }
+
+    public void setStartPoint(Point point) {
+        this.startP = point;
+    }
+
+    public void setEndPoint(Point point) {
+        this.endP = point;
     }
 
     public Point getStartPoint(){
