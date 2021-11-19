@@ -13,14 +13,6 @@ public class Line {
         list.add(lineP);
     }
 
-    // public Point getStartPoint(){
-    //     return list.get(0);
-    // }
-
-    // public Point getEndPoint(){
-    //     return list.get(-1);
-    // }
-
     public boolean isEmpty(){
         return list.isEmpty();
     }
