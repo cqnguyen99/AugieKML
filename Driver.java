@@ -7,7 +7,6 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Characters;
-import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
@@ -18,18 +17,17 @@ public class Driver {
         File file = new File(input.nextLine());
 
         // Instance of the class which helps on reading tags
-        XMLInputFactory factory = XMLInputFactory.newInstance();
+        //XMLInputFactory factory = XMLInputFactory.newInstance();
+        XMLInputFactory factory = XMLInputFactory.newFactory();
+        factory.setProperty("javax.xml.stream.isCoalescing", true);
       
         // Initializing the handler to access the tags in the XML file
         XMLEventReader eventReader = factory.createXMLEventReader(new FileReader(file));
         
         List<Point> points = new ArrayList<>();
-        Point point = new Point();
-        Point startP = new Point();
-        Point endP = new Point();
-        Line line = null;
-        Polygon poly = null;
-        StringBuilder current = new StringBuilder();
+        List<Line> lines = new ArrayList<>();
+        List<Polygon> polygons = new ArrayList<>();
+        String current = "";
 
         // Checking the availability of the next tag
         while(eventReader.hasNext()) {
@@ -38,56 +36,47 @@ public class Driver {
                 StartElement startElement = xmlEvent.asStartElement();
                 //Now everytime content tags are found; 
                 //Move the iterator and read data
-                if("coordinates".equalsIgnoreCase(startElement.getName().getLocalPart())) {
+                if(startElement.getName().getLocalPart().equals("coordinates")) {
                     Characters nameDataEvent = (Characters)eventReader.nextEvent();
-                    current.append(nameDataEvent.getData());
-                    String[] coords = current.toString().split(" ");
-                    List<String> coordsCopy = new ArrayList<>();
-                    for(int i = 0; i < coords.length; i++) {
-                        if(coords[i].isBlank()) {
-                            coordsCopy.add(coords[++i]);
+                    current = nameDataEvent.getData();
+                    current = current.trim();
+                    String[] coords = current.split("\n");
+                    
+                    if(coords.length == 1) {
+                        String[] coord = coords[0].split(",");
+                        Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                        points.add(point);
+                    }
+
+                    else {
+                        if (!coords[0].trim().equalsIgnoreCase(coords[coords.length-1].trim())) {
+                            Line line = new Line();
+                            for (String s: coords) {
+                                if (s.isBlank()) continue;
+                                String[] coord = s.split(",");
+                                Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                                line.addPoint(point);
+                            }
+                            lines.add(line);
                         }
-                        else
-                            coordsCopy.add(coords[i]);
-                    }
-                    if(coordsCopy.size() == 1) {
-                        String[] coord = coordsCopy.get(0).split(",");
-                        point.setLongitude(Double.parseDouble(coord[0]));
-                        point.setLatitude(Double.parseDouble(coord[1]));
-                        point.setAltitude(Double.parseDouble(coord[2]));
-                        System.out.println(point.toString() + " point");
-                    }
-                    else if(coordsCopy.size() == 2) {
-                        String[] coord = coordsCopy.get(0).split(",");
-                        startP.setLongitude(Double.parseDouble(coord[0]));
-                        startP.setLatitude(Double.parseDouble(coord[1]));
-                        startP.setAltitude(Double.parseDouble(coord[2]));
-                        coord = coordsCopy.get(1).split(",");
-                        endP.setLongitude(Double.parseDouble(coord[0]));
-                        endP.setLatitude(Double.parseDouble(coord[1]));
-                        endP.setAltitude(Double.parseDouble(coord[2]));
-                        line = new Line(startP, endP);
-                        System.out.println(line.toString() + " line");
-                    }
-                    else if(coordsCopy.size() > 2) {
-                        for(int i = 0; i < coordsCopy.size(); i++) {
-                            String[] coord = coordsCopy.get(i).split(",");
-                            point.setLongitude(Double.parseDouble(coord[0]));
-                            point.setLatitude(Double.parseDouble(coord[1]));
-                            point.setAltitude(Double.parseDouble(coord[2]));
-                            points.add(point);
+                        else {
+                            Polygon polygon = new Polygon();
+                            for (String s: coords) {
+                                if (s.isBlank()) continue;
+                                String[] coord = s.split(",");
+                                Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                                polygon.addPoint(point);
+                            }
+                            polygons.add(polygon);
                         }
-                        poly = new Polygon(points);
-                        System.out.println(poly.toString() + " poly");
                     }
-                    current.delete(0, current.length()-1);
+                    current = "";
                 }
             }
-
-            if(xmlEvent.isEndElement()) {
-                EndElement endElement = xmlEvent.asEndElement();
-            }
         }
+        System.out.println(points);
+        System.out.println(lines);
+        System.out.println(polygons);
         input.close();
     }
 }

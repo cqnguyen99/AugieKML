@@ -4,7 +4,7 @@
     <Placemark>
       <Point>
         <coordinates>
--135,50,0
+          -135,50,0
         </coordinates>
       </Point>
     </Placemark>
@@ -14,7 +14,10 @@
         <outerBoundaryIs>
           <LinearRing>
             <coordinates>
--135,50,300000 -135,40,450000 -80,40,450000 -80,50,300000 -135,50,300000
+            135.2, 35.4, 0.0 
+            135.4, 35.6, 0.0 
+            135.2, 35.6, 0.0 
+            135.2, 35.4, 0.0
             </coordinates>
           </LinearRing>
         </outerBoundaryIs>
@@ -23,7 +26,8 @@
     <Placemark>
       <LinearRing>
         <coordinates>
--135,50,0 -135,40,0
+          -135,50,0
+          -135,40,0
         </coordinates>
       </LinearRing>
     </Placemark>

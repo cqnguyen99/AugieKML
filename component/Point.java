@@ -1,8 +1,5 @@
 package component;
 
-import java.util.*;
-import java.io.*;
-
 public class Point {
     private double longitude;
     private double latitude;
