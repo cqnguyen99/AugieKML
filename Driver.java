@@ -40,18 +40,36 @@ public class Driver {
                     Characters nameDataEvent = (Characters)eventReader.nextEvent();
                     current = nameDataEvent.getData();
                     current = current.trim();
-                    String[] coords = current.split("\n");
-                    
-                    if(coords.length == 1) {
-                        String[] coord = coords[0].split(",");
+                    String[] coords = current.split("[\\n|\\s]");
+                    List<String> newCoords = new ArrayList<>(); 
+                    String curCoord = "";
+                    for (String s: coords) {
+                        if (s.isBlank()) continue;
+                        if (!s.substring(s.length()-1).equals(",")) {
+                            if (curCoord.length() == 0) {
+                                newCoords.add(s);
+                            }
+                            else {
+                                curCoord += s;
+                                newCoords.add(curCoord);
+                                curCoord = "";
+                            }
+                        }
+                        else {
+                            curCoord += s;
+                        }
+                    }
+                    // for (String s: newCoords) System.out.println(s);
+                    if(newCoords.size() == 1) {
+                        String[] coord = newCoords.get(0).split(",");
                         Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
                         points.add(point);
                     }
 
                     else {
-                        if (!coords[0].trim().equalsIgnoreCase(coords[coords.length-1].trim())) {
+                        if (!newCoords.get(0).trim().equalsIgnoreCase(newCoords.get(newCoords.size()-1).trim())) {
                             Line line = new Line();
-                            for (String s: coords) {
+                            for (String s: newCoords) {
                                 if (s.isBlank()) continue;
                                 String[] coord = s.split(",");
                                 Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
@@ -61,7 +79,7 @@ public class Driver {
                         }
                         else {
                             Polygon polygon = new Polygon();
-                            for (String s: coords) {
+                            for (String s: newCoords) {
                                 if (s.isBlank()) continue;
                                 String[] coord = s.split(",");
                                 Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));

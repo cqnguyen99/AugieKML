@@ -14,10 +14,7 @@
         <outerBoundaryIs>
           <LinearRing>
             <coordinates>
-            135.2, 35.4, 0.0 
-            135.4, 35.6, 0.0 
-            135.2, 35.6, 0.0 
-            135.2, 35.4, 0.0
+            135.2, 35.4, 0.0  135.4, 35.6, 0.0  135.2, 35.6, 0.0  135.2,35.4,0.0
             </coordinates>
           </LinearRing>
         </outerBoundaryIs>
