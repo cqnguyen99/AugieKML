@@ -59,35 +59,8 @@ public class Driver {
                             curCoord += s;
                         }
                     }
-                    // for (String s: newCoords) System.out.println(s);
-                    if(newCoords.size() == 1) {
-                        String[] coord = newCoords.get(0).split(",");
-                        Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
-                        points.add(point);
-                    }
 
-                    else {
-                        if (!newCoords.get(0).trim().equalsIgnoreCase(newCoords.get(newCoords.size()-1).trim())) {
-                            Line line = new Line();
-                            for (String s: newCoords) {
-                                if (s.isBlank()) continue;
-                                String[] coord = s.split(",");
-                                Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
-                                line.addPoint(point);
-                            }
-                            lines.add(line);
-                        }
-                        else {
-                            Polygon polygon = new Polygon();
-                            for (String s: newCoords) {
-                                if (s.isBlank()) continue;
-                                String[] coord = s.split(",");
-                                Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
-                                polygon.addPoint(point);
-                            }
-                            polygons.add(polygon);
-                        }
-                    }
+                    readCoordinates(newCoords, points, lines, polygons);
                     current = "";
                 }
             }
@@ -97,4 +70,35 @@ public class Driver {
         System.out.println(polygons);
         input.close();
     }
+
+    public static void readCoordinates(List<String> newCoords, List<Point> points, List<Line> lines, List<Polygon> polygons) {
+        if(newCoords.size() == 1) {
+            String[] coord = newCoords.get(0).split(",");
+            Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+            points.add(point);
+        }
+
+        else {
+            if (!newCoords.get(0).trim().equalsIgnoreCase(newCoords.get(newCoords.size()-1).trim())) {
+                Line line = new Line();
+                for (String s: newCoords) {
+                    if (s.isBlank()) continue;
+                    String[] coord = s.split(",");
+                    Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                    line.addPoint(point);
+                }
+                lines.add(line);
+            }
+            else {
+                Polygon polygon = new Polygon();
+                for (String s: newCoords) {
+                    if (s.isBlank()) continue;
+                    String[] coord = s.split(",");
+                    Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                    polygon.addPoint(point);
+                }
+                polygons.add(polygon);
+            }
+        }
+    } 
 }
