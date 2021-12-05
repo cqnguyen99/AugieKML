@@ -10,7 +10,7 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-public class Driver {
+public class ReadingDriver {
     public static void main(String[] args) throws FileNotFoundException, XMLStreamException {
         System.out.print("Enter the KML file: ");
         Scanner input = new Scanner(System.in);
@@ -84,7 +84,6 @@ public class Driver {
         else {
             if (!newCoords.get(0).trim().equalsIgnoreCase(newCoords.get(newCoords.size()-1).trim())) {
                 Line line = new Line();
-                System.out.println(newCoords);
                 for (String s: newCoords) {
                     if (s.isBlank()) continue;
                     String[] coord = s.split(",");
