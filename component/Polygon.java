@@ -4,34 +4,87 @@ import java.util.*;
 
 public class Polygon
 {
-    private List<Point> list;
+    private List<Point> outerBoundary;
+    private List<Point> innerBoundary;
+    private String label;
 
     public Polygon() {
-        list = new ArrayList<>();
+        outerBoundary = new ArrayList<>();
+        innerBoundary = new ArrayList<>();
+        label = "";
     }
 
-    public void addPoint(Point polyP){
-        list.add(polyP);
+    public Polygon(String label) {
+        outerBoundary = new ArrayList<>();
+        innerBoundary = new ArrayList<>();
+        this.label = label;
+    }
+
+    public void addOuterPoint(Point polyP){
+        outerBoundary.add(polyP);
+    }
+
+    public void addInnerPoint(Point polyP){
+        innerBoundary.add(polyP);
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Point getOuterPoint(int i) {
+        return outerBoundary.get(i);
+    }
+
+    public Point getInnerPoint(int i) {
+        return outerBoundary.get(i);
+    }
+
+    public boolean hasInner() {
+        if (innerBoundary.isEmpty()) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
     
-    public boolean isEmpty(){
-        return list.isEmpty();
+    public boolean isOuterEmpty() {
+        return outerBoundary.isEmpty();
     }
 
-    public int getSize(){
-        return list.size();
+    public int getOuterSize() {
+        return outerBoundary.size();
     }
 
-    public int findPoint(Point lineP){
-        return list.indexOf(lineP);
+    public int getInnerSize() {
+        return innerBoundary.size();
     }
 
-    public boolean clearAll(){
-        list.clear();
-        return list.isEmpty();
+    public int findOuterPoint(Point polyP){
+        return outerBoundary.indexOf(polyP);
+    }
+
+    public int findInnerPoint(Point polyP){
+        return innerBoundary.indexOf(polyP);
+    }
+
+    public void clearAll() {
+        outerBoundary.clear();
+        innerBoundary.clear();
     }
 
     public String toString() {
-        return list.toString();
+        String s = "Outer Boundary: " + outerBoundary.toString() + "\nInner Boundary: " + innerBoundary.toString();
+        if (innerBoundary.isEmpty()) {
+            return outerBoundary.toString();
+        }
+        else {
+            return s;
+        }
     }
 }

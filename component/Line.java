@@ -4,13 +4,32 @@ import java.util.*;
 
 public class Line {
     private List<Point> list;
+    private String label;
 
     public Line() {
         list = new ArrayList<Point>();
+        label = "";
+    }
+
+    public Line(String label) {
+        list = new ArrayList<Point>();
+        this.label = label;
     }
 
     public void addPoint(Point lineP){
         list.add(lineP);
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Point getPoint(int i) {
+        return list.get(i);
     }
 
     public boolean isEmpty(){

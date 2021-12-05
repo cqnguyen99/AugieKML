@@ -59,7 +59,7 @@ public class Driver {
                             curCoord += s;
                         }
                     }
-
+                    
                     readCoordinates(newCoords, points, lines, polygons);
                     current = "";
                 }
@@ -74,8 +74,17 @@ public class Driver {
     public static void readCoordinates(List<String> newCoords, List<Point> points, List<Line> lines, List<Polygon> polygons) {
         if(newCoords.size() == 1) {
             String[] coord = newCoords.get(0).split(",");
-            Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
-            points.add(point);
+            //boolean check = true;
+            try {
+                if (Double.parseDouble(coord[0]) >= -180.0 && Double.parseDouble(coord[0]) <= 180.0 && 
+                Double.parseDouble(coord[1]) >= -90.0 && Double.parseDouble(coord[1]) <= 90.0) {
+                    Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                    points.add(point);
+                }
+            }
+            catch (NumberFormatException ex) {
+
+            }
         }
 
         else {
@@ -91,11 +100,15 @@ public class Driver {
             }
             else {
                 Polygon polygon = new Polygon();
+                int count = 0;
                 for (String s: newCoords) {
                     if (s.isBlank()) continue;
                     String[] coord = s.split(",");
                     Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
-                    polygon.addPoint(point);
+                    if (count == newCoords.size() - 1) break;
+                    if (count == 0) polygon.addOuterPoint(point);
+                    else polygon.addInnerPoint(point);
+                    count++;
                 }
                 polygons.add(polygon);
             }
