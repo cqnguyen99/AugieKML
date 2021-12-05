@@ -75,43 +75,51 @@ public class Driver {
         if(newCoords.size() == 1) {
             String[] coord = newCoords.get(0).split(",");
             //boolean check = true;
-            try {
-                if (Double.parseDouble(coord[0]) >= -180.0 && Double.parseDouble(coord[0]) <= 180.0 && 
-                Double.parseDouble(coord[1]) >= -90.0 && Double.parseDouble(coord[1]) <= 90.0) {
-                    Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
-                    points.add(point);
-                }
-            }
-            catch (NumberFormatException ex) {
-
+            if (checkValidPoint(coord)) {
+                Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                points.add(point);
             }
         }
 
         else {
             if (!newCoords.get(0).trim().equalsIgnoreCase(newCoords.get(newCoords.size()-1).trim())) {
                 Line line = new Line();
+                System.out.println(newCoords);
                 for (String s: newCoords) {
                     if (s.isBlank()) continue;
                     String[] coord = s.split(",");
-                    Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
-                    line.addPoint(point);
+                    if (checkValidPoint(coord)) {
+                        Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                        line.addPoint(point);
+                    }
                 }
                 lines.add(line);
             }
             else {
                 Polygon polygon = new Polygon();
-                int count = 0;
                 for (String s: newCoords) {
                     if (s.isBlank()) continue;
                     String[] coord = s.split(",");
-                    Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
-                    if (count == newCoords.size() - 1) break;
-                    if (count == 0) polygon.addOuterPoint(point);
-                    else polygon.addInnerPoint(point);
-                    count++;
+                    if (checkValidPoint(coord)) {
+                        Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                        polygon.addOuterPoint(point);
+                    }
                 }
                 polygons.add(polygon);
             }
         }
     } 
+
+    public static boolean checkValidPoint(String[] coord) {
+        try {
+            if (Double.parseDouble(coord[0]) >= -180.0 && Double.parseDouble(coord[0]) <= 180.0 && 
+            Double.parseDouble(coord[1]) >= -90.0 && Double.parseDouble(coord[1]) <= 90.0) {
+                return true;
+            }
+        }
+        catch (NumberFormatException ex) {
+            return true;
+        }
+        return false;
+    }
 }
