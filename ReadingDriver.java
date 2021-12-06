@@ -72,7 +72,6 @@ public class ReadingDriver {
     public static void readCoordinates(List<String> newCoords, List<Point> points, List<Line> lines, List<Polygon> polygons) {
         if(newCoords.size() == 1) {
             String[] coord = newCoords.get(0).split(",");
-            //boolean check = true;
             Double[] newCoord = convertToDecimal(coord);
             if (checkValidPoint(newCoord)) {
                 Point point = new Point(newCoord[0], newCoord[1], newCoord[2]);
