@@ -8,25 +8,10 @@
             </Point>
         </Placemark>
         <Placemark>
-            <name>Augie</name>
+            <name/>
             <LineString>
-                <coordinates>-96.7394,43.5224,0.0 -96.7394,43.5224,0.0 -96.7394,43.5224,0.0 </coordinates>
+                <coordinates/>
             </LineString>
-        </Placemark>
-        <Placemark>
-            <name>Aug</name>
-            <Polygon>
-                <outerBoundaryIs>
-                    <LinearRing>
-                        <coordinates>-96.7394,43.5224,0.0 -96.7394,43.5224,0.0 -96.7394,43.5224,0.0 </coordinates>
-                    </LinearRing>
-                </outerBoundaryIs>
-                <innerBoundaryIs>
-                    <LinearRing>
-                        <coordinates>-96.7394,43.5224,0.0 -96.7394,43.5224,0.0 -96.7394,43.5224,0.0 </coordinates>
-                    </LinearRing>
-                </innerBoundaryIs>
-            </Polygon>
         </Placemark>
     </Document>
 </kml>

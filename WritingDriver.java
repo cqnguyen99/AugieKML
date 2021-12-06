@@ -4,15 +4,15 @@ import java.io.*;
 import java.util.*;
 
 import javax.xml.stream.XMLStreamException;
-// import javax.xml.transform.OutputKeys;
-// import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-// import javax.xml.transform.TransformerFactory;
-// import javax.xml.transform.stream.StreamResult;
-// import javax.xml.transform.stream.StreamSource;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+// import javax.xml.transform.OutputKeys;
+// import javax.xml.transform.Transformer;
+// import javax.xml.transform.TransformerFactory;
+// import javax.xml.transform.stream.StreamResult;
+// import javax.xml.transform.stream.StreamSource;
 
 public class WritingDriver {
     public static void main(String[] args) {
@@ -50,18 +50,24 @@ public class WritingDriver {
     }
     // read txt file for testing and demo
     public static void readTxtTest(String file, List<Point> points, List<Line> lines, List<Polygon> polygons) throws FileNotFoundException {
+        //System.out.println(file);
+
         File txtFile = new File(file);
         Scanner scan = new Scanner(txtFile);
 
+        String temp = "";
         while (scan.hasNext()) {
-            if (scan.next().equalsIgnoreCase("point")) {
-                Point p = new Point(scan.next(), scan.nextDouble(), 
-                scan.nextDouble(), scan.nextDouble());
+            String cur = "";
+            if (temp.isEmpty()) cur = scan.next();
+            else cur = temp;
+            if (cur.equalsIgnoreCase("point")) {
+                Point p = new Point(scan.next(), scan.nextDouble(), scan.nextDouble(), scan.nextDouble());
                 points.add(p);
             }
 
-            if (scan.next().equalsIgnoreCase("line")) {
-                Line l = new Line(scan.next());
+            if (cur.equalsIgnoreCase("line")) {
+                scan.next();
+                Line l = new Line();
                 while (scan.hasNextDouble()) {
                     Point lp = new Point(scan.nextDouble(), scan.nextDouble(), scan.nextDouble());
                     l.addPoint(lp);
@@ -69,20 +75,25 @@ public class WritingDriver {
                 lines.add(l);
             }
 
-            if (scan.next().equalsIgnoreCase("polygon")) {
-                Polygon poly = new Polygon(scan.next());
+            if (cur.equalsIgnoreCase("polygon")) {
+                Polygon poly = new Polygon();
+                scan.next();
                 while (scan.hasNextDouble()) {
                     Point op = new Point(scan.nextDouble(), scan.nextDouble(), scan.nextDouble());
                     poly.addOuterPoint(op);
                 }
-                if (scan.next().equalsIgnoreCase("innerboundary")) {
+                temp = scan.next();
+                if (temp.equalsIgnoreCase("innerboundary")) {
                     while (scan.hasNextDouble()) {
                         Point ip = new Point(scan.nextDouble(), scan.nextDouble(), scan.nextDouble());
                         poly.addInnerPoint(ip);
                     }
                     polygons.add(poly);
+                    temp = "";
                 }
-                else {polygons.add(poly);}
+                else {
+                    polygons.add(poly);
+                }
             }
         }
         scan.close();

@@ -9,9 +9,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
 import java.io.*;
 import java.util.*;
-import java.lang.StringBuilder;
+// import java.lang.StringBuilder;
 
 public class Write {
     private List<Point> points;
@@ -47,15 +48,15 @@ public class Write {
 
         // have data
         else {
-            if (points.isEmpty() == false) {
+            if (!points.isEmpty()) {
                 writePoints(writer, points);
             }
 
-            if (lines.isEmpty() == false) {
+            if (!lines.isEmpty()) {
                 writeLines(writer, lines);
             }
                 
-            if (polygons.isEmpty() == false) {
+            if (!polygons.isEmpty()) {
                 writePolygons(writer, polygons);
             }
         }
