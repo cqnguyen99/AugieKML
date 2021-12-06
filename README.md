@@ -8,7 +8,7 @@
 
 ## How to clone this repo
 - Using the terminal, `cd` into the diretory where you want to clone this repo
-- Run `git clone https://github.com/tahaafzal5/AugieGeoTag.git`
+- Run `git clone https://github.com/cqnguyen99/AugieKML.git`
 - Open the project in your favorite text editor
 
 ## How to run the program
