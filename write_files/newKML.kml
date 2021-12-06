@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+    <Document>
+        <Placemark>
+            <name>Augustana</name>
+            <Point>
+                <coordinates>-96.7394,43.5224,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark>
+            <name>Augie</name>
+            <LineString>
+                <coordinates>-96.7394,43.5224,0.0 -96.7394,43.5224,0.0 -96.7394,43.5224,0.0 </coordinates>
+            </LineString>
+        </Placemark>
+        <Placemark>
+            <name>Aug</name>
+            <Polygon>
+                <outerBoundaryIs>
+                    <LinearRing>
+                        <coordinates>-96.7394,43.5224,0.0 -96.7394,43.5224,0.0 -96.7394,43.5224,0.0 </coordinates>
+                    </LinearRing>
+                </outerBoundaryIs>
+                <innerBoundaryIs>
+                    <LinearRing>
+                        <coordinates>-96.7394,43.5224,0.0 -96.7394,43.5224,0.0 -96.7394,43.5224,0.0 </coordinates>
+                    </LinearRing>
+                </innerBoundaryIs>
+            </Polygon>
+        </Placemark>
+    </Document>
+</kml>
