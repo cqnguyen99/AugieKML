@@ -34,8 +34,7 @@ public class ReadingDriver {
             XMLEvent xmlEvent = eventReader.nextEvent();
             if(xmlEvent.isStartElement()) {
                 StartElement startElement = xmlEvent.asStartElement();
-                //Now everytime content tags are found; 
-                //Move the iterator and read data
+                //Now everytime content tags are found. Move the iterator and read data
                 if(startElement.getName().getLocalPart().equals("coordinates")) {
                     Characters nameDataEvent = (Characters)eventReader.nextEvent();
                     current = nameDataEvent.getData();
@@ -59,7 +58,6 @@ public class ReadingDriver {
                             curCoord += s;
                         }
                     }
-                    
                     readCoordinates(newCoords, points, lines, polygons);
                     current = "";
                 }
@@ -75,8 +73,9 @@ public class ReadingDriver {
         if(newCoords.size() == 1) {
             String[] coord = newCoords.get(0).split(",");
             //boolean check = true;
-            if (checkValidPoint(coord)) {
-                Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+            Double[] newCoord = convertToDecimal(coord);
+            if (checkValidPoint(newCoord)) {
+                Point point = new Point(newCoord[0], newCoord[1], newCoord[2]);
                 points.add(point);
             }
         }
@@ -87,8 +86,9 @@ public class ReadingDriver {
                 for (String s: newCoords) {
                     if (s.isBlank()) continue;
                     String[] coord = s.split(",");
-                    if (checkValidPoint(coord)) {
-                        Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                    Double[] newCoord = convertToDecimal(coord);
+                    if (checkValidPoint(newCoord)) {
+                        Point point = new Point(newCoord[0], newCoord[1], newCoord[2]);
                         line.addPoint(point);
                     }
                 }
@@ -99,8 +99,9 @@ public class ReadingDriver {
                 for (String s: newCoords) {
                     if (s.isBlank()) continue;
                     String[] coord = s.split(",");
-                    if (checkValidPoint(coord)) {
-                        Point point = new Point(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2]));
+                    Double[] newCoord = convertToDecimal(coord);
+                    if (checkValidPoint(newCoord)) {
+                        Point point = new Point(newCoord[0], newCoord[1], newCoord[2]);
                         polygon.addOuterPoint(point);
                     }
                 }
@@ -109,16 +110,41 @@ public class ReadingDriver {
         }
     } 
 
-    public static boolean checkValidPoint(String[] coord) {
-        try {
-            if (Double.parseDouble(coord[0]) >= -180.0 && Double.parseDouble(coord[0]) <= 180.0 && 
-            Double.parseDouble(coord[1]) >= -90.0 && Double.parseDouble(coord[1]) <= 90.0) {
-                return true;
-            }
-        }
-        catch (NumberFormatException ex) {
+    public static boolean checkValidPoint(Double[] coord) {
+        if (coord[0] >= -180.0 && coord[0] <= 180.0 && coord[1] >= -90.0 && coord[1] <= 90.0) {
             return true;
         }
         return false;
+    }
+
+    public static Double[] convertToDecimal(String[] coord) {
+        try {
+            return new Double[]{Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2])};
+        }
+        catch (NumberFormatException ex) {
+            String[] split = coord[0].split("[^0-9.]");
+            if (split.length >= 3) {
+                Double[] convertedCoord = new Double[3];
+                for (int i=0; i<coord.length; i++) {
+                    String[] s = coord[i].split("[^0-9.]");
+                    double decimal = Double.parseDouble(s[0]) + Double.parseDouble(s[1])/60 + Double.parseDouble(s[2])/3600;
+                    String direction = coord[i].substring(coord[i].length()-1);
+                    if (direction.equals("S") || direction.equals("W")) decimal = -decimal;
+                    convertedCoord[i] = decimal;
+                }
+                return convertedCoord;
+            }
+            else {
+                Double[] convertedCoord = new Double[3];
+                for (int i=0; i<coord.length; i++) {
+                    String[] s = coord[i].split("[^0-9.]");
+                    double decimal = Double.parseDouble(s[0]) + Double.parseDouble(s[1])/60;
+                    String direction = coord[i].substring(coord[i].length()-1);
+                    if (direction.equals("S") || direction.equals("W")) decimal = -decimal;
+                    convertedCoord[i] = decimal;
+                }
+                return convertedCoord;
+            }
+        }
     }
 }
