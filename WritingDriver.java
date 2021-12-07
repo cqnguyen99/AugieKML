@@ -69,8 +69,9 @@ public class WritingDriver {
             }
             // Check if it is a line, add coordinates to the lines list
             else if (cur.equalsIgnoreCase("line")) {
-                scan.next();
                 Line l = new Line();
+                // Set label of line
+                l.setLabel(scan.next());
                 while (scan.hasNextDouble()) {
                     Point lp = new Point(scan.nextDouble(), scan.nextDouble(), scan.nextDouble());
                     l.addPoint(lp);
@@ -80,13 +81,14 @@ public class WritingDriver {
             // Check if it is a polygon, add coordinates to the polygon list
             else if (cur.equalsIgnoreCase("polygon")) {
                 Polygon poly = new Polygon();
-                scan.next();
+                // Set label of polygon
+                poly.setLabel(scan.next());
                 while (scan.hasNextDouble()) {
                     Point op = new Point(scan.nextDouble(), scan.nextDouble(), scan.nextDouble());
                     poly.addOuterPoint(op);
                 }
                 temp = scan.next();
-                // check if the polygon has the innerboudary
+                // Check if the polygon has the innerboudary
                 if (temp.equalsIgnoreCase("innerboundary")) {
                     while (scan.hasNextDouble()) {
                         Point ip = new Point(scan.nextDouble(), scan.nextDouble(), scan.nextDouble());

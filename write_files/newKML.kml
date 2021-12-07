@@ -8,13 +8,13 @@
             </Point>
         </Placemark>
         <Placemark>
-            <name/>
+            <name>Augie</name>
             <LineString>
                 <coordinates>-96.7394,43.5224,0.0 -96.7394,43.5224,0.0 -96.7394,43.5224,0.0 </coordinates>
             </LineString>
         </Placemark>
         <Placemark>
-            <name/>
+            <name>Aug</name>
             <Polygon>
                 <outerBoundaryIs>
                     <LinearRing>
