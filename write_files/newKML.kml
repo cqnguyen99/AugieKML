@@ -10,8 +10,18 @@
         <Placemark>
             <name/>
             <LineString>
-                <coordinates/>
+                <coordinates>-96.7394,43.5224,0.0 -96.7394,43.5224,0.0 -96.7394,43.5224,0.0 </coordinates>
             </LineString>
+        </Placemark>
+        <Placemark>
+            <name/>
+            <Polygon>
+                <outerBoundaryIs>
+                    <LinearRing>
+                        <coordinates>-96.7394,43.5224,0.0 -96.7394,43.5224,0.0 -96.7394,43.5224,0.0 </coordinates>
+                    </LinearRing>
+                </outerBoundaryIs>
+            </Polygon>
         </Placemark>
     </Document>
 </kml>

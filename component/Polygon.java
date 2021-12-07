@@ -79,12 +79,11 @@ public class Polygon
     }
 
     public String toString() {
-        String s = "Outer Boundary: " + outerBoundary.toString() + "\nInner Boundary: " + innerBoundary.toString();
         if (innerBoundary.isEmpty()) {
             return outerBoundary.toString();
         }
         else {
-            return s;
+            return "Outer Boundary: " + outerBoundary.toString() + "\nInner Boundary: " + innerBoundary.toString();
         }
     }
 }
