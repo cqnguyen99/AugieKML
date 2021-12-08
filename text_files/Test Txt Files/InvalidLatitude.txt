@@ -1,0 +1,3 @@
+point
+invalid lat
+-96.7373 99.0 0.0
