@@ -41,7 +41,7 @@ public class Polygon
     }
 
     public Point getInnerPoint(int i) {
-        return outerBoundary.get(i);
+        return innerBoundary.get(i);
     }
 
     public boolean hasInner() {

@@ -45,7 +45,7 @@
                 </outerBoundaryIs>
                 <innerBoundaryIs>
                     <LinearRing>
-                        <coordinates>-96.7411,43.5272,0.0 -96.7364,43.5272,0.0 -96.7364,43.5223,0.0 -96.7411,43.5223,0.0 -96.7411,43.5272,0.0 </coordinates>
+                        <coordinates>-96.739,43.5246,0.0 -96.7381,43.5246,0.0 -96.7381,43.5236,0.0 -96.7391,43.5236,0.0 -96.739,43.5246,0.0 </coordinates>
                     </LinearRing>
                 </innerBoundaryIs>
             </Polygon>

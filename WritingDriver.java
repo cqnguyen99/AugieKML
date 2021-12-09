@@ -42,6 +42,7 @@ public class WritingDriver {
         catch (TransformerException | XMLStreamException | IOException e) {
             e.printStackTrace();
         }
+
         input.close();
     }
 
@@ -116,8 +117,7 @@ public class WritingDriver {
                 if (temp.equalsIgnoreCase("inner boundary")) {
                     while (scan.hasNextLine()) {
                         temp = scan.nextLine();
-                        String[] coord = temp.split(" ");
-
+                        String[] coord = temp.split("\\s");
                         if (coord.length == 3) {
                             Double[] newCoord = convertToDecimal(coord);
                             if (checkValidPoint(newCoord)) {
@@ -127,11 +127,8 @@ public class WritingDriver {
                         }
                         else break;
                     }
-                    polygons.add(poly);
                 }
-                else {
-                    polygons.add(poly);
-                }
+                polygons.add(poly);
             }
         }
         scan.close();
