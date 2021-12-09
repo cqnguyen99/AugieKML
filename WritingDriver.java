@@ -27,7 +27,7 @@ public class WritingDriver {
             readTxtTest(args[0], points, lines, polygons);
 
             // Output file path
-            System.out.print("Name of the output file: ");
+            System.out.print("Name of the KML output file: ");
             String fileName = input.nextLine();
             String p = System.getProperty("user.dir");
             FileWriter fw = new FileWriter(p + File.separator + fileName + ".kml");
@@ -56,25 +56,39 @@ public class WritingDriver {
         Scanner scan = new Scanner(txtFile);
 
         String temp = "";
-        while (scan.hasNext()) {
+        while (scan.hasNextLine()) {
             String cur = "";
             if (temp.isEmpty()) {
-                cur = scan.next();
+                cur = scan.nextLine();
             }
             else cur = temp;
             // Check if it is a point, add coordinates to the points list
             if (cur.equalsIgnoreCase("point")) {
-                Point p = new Point(scan.next(), scan.nextDouble(), scan.nextDouble(), scan.nextDouble());
-                points.add(p);
+                String label = scan.nextLine();
+                String[] coord = scan.nextLine().split("\\s");
+                Double[] newCoord = convertToDecimal(coord);
+                if (checkValidPoint(newCoord)) {
+                    Point point = new Point(label, newCoord[0], newCoord[1], newCoord[2]);
+                    points.add(point);
+                }
+                temp = scan.nextLine();
             }
             // Check if it is a line, add coordinates to the lines list
             else if (cur.equalsIgnoreCase("line")) {
                 Line l = new Line();
                 // Set label of line
-                l.setLabel(scan.next());
-                while (scan.hasNextDouble()) {
-                    Point lp = new Point(scan.nextDouble(), scan.nextDouble(), scan.nextDouble());
-                    l.addPoint(lp);
+                l.setLabel(scan.nextLine());
+                while (scan.hasNextLine()) {
+                    temp = scan.nextLine();
+                    String[] coord = temp.split("\\s");
+                    if (coord.length == 3) {
+                        Double[] newCoord = convertToDecimal(coord);
+                        if (checkValidPoint(newCoord)) {
+                            Point lp = new Point(newCoord[0], newCoord[1], newCoord[2]);
+                            l.addPoint(lp);
+                        }
+                    }
+                    else break;
                 }
                 lines.add(l);
             }
@@ -82,20 +96,34 @@ public class WritingDriver {
             else if (cur.equalsIgnoreCase("polygon")) {
                 Polygon poly = new Polygon();
                 // Set label of polygon
-                poly.setLabel(scan.next());
-                while (scan.hasNextDouble()) {
-                    Point op = new Point(scan.nextDouble(), scan.nextDouble(), scan.nextDouble());
-                    poly.addOuterPoint(op);
+                poly.setLabel(scan.nextLine());
+                while (scan.hasNextLine()) {
+                    temp = scan.nextLine();
+                    String[] coord = temp.split("\\s");
+                    if (coord.length == 3) {
+                        Double[] newCoord = convertToDecimal(coord);
+                        if (checkValidPoint(newCoord)) {
+                            Point op = new Point(newCoord[0], newCoord[1], newCoord[2]);
+                            poly.addOuterPoint(op);
+                        }
+                    }
+                    else break;
                 }
-                temp = scan.next();
                 // Check if the polygon has the innerboudary
-                if (temp.equalsIgnoreCase("innerboundary")) {
-                    while (scan.hasNextDouble()) {
-                        Point ip = new Point(scan.nextDouble(), scan.nextDouble(), scan.nextDouble());
-                        poly.addInnerPoint(ip);
+                if (temp.equalsIgnoreCase("inner boundary")) {
+                    while (scan.hasNextLine()) {
+                        temp = scan.nextLine();
+                        String[] coord = temp.split(" ");
+                        if (coord.length == 3) {
+                            Double[] newCoord = convertToDecimal(coord);
+                            if (checkValidPoint(newCoord)) {
+                                Point ip = new Point(newCoord[0], newCoord[1], newCoord[2]);
+                                poly.addInnerPoint(ip);
+                            }
+                        }
+                        else break;
                     }
                     polygons.add(poly);
-                    temp = "";
                 }
                 else {
                     polygons.add(poly);
@@ -103,5 +131,59 @@ public class WritingDriver {
             }
         }
         scan.close();
+    }
+
+    // Check if -180 <= longitude <= 180 and -90 <= latitude <= 90 
+    public static boolean checkValidPoint(Double[] coord) {
+        if (coord[0] >= -180.0 && coord[0] <= 180.0 && coord[1] >= -90.0 && coord[1] <= 90.0) {
+            return true;
+        }
+        return false;
+    }
+
+    public static Double[] convertToDecimal(String[] coord) {
+        // If the coordinates are already in DD format, return those coordinates
+        try {
+            return new Double[] {Double.parseDouble(coord[0]), Double.parseDouble(coord[1]), Double.parseDouble(coord[2])};
+        }
+        catch (NumberFormatException ex) {
+            // Split DMS and DDM types by number and '.' For example, 122°27'W = [122, 27]
+            // In that case, if length of the string array >= 3, it is in the DMS format. Otherwise, it is in the DDM format
+            String[] split = coord[0].split("[^0-9.]");
+
+            // Convert DMS to DD: DD = D + M/60 + S/3600
+            if (split.length >= 3) {    
+                Double[] convertedCoord = new Double[3];    // double array of longitude, latitude, altitude
+                convertedCoord[2] = 0.0;                    // altitude wll equals to 0 as default
+                for (int i=0; i<coord.length - 1; i++) {
+                    String[] s = coord[i].split("[^0-9.]");
+                    double decimal = Double.parseDouble(s[0]) + Double.parseDouble(s[1])/60 + Double.parseDouble(s[2])/3600;
+                    String direction = coord[i].substring(coord[i].length()-1);     // Get the direction: N, S, E, W
+                    // If the direction is S or W, the sign is negative
+                    // If the direction is N or E, the sign is positive
+                    if (direction.equals("S") || direction.equals("W")) {
+                        decimal = -decimal;
+                    }
+                    convertedCoord[i] = decimal;
+                }
+                return convertedCoord;
+            }
+
+            // Convert DDM to DD: DD = D + M/60
+            else {
+                Double[] convertedCoord = new Double[3];
+                convertedCoord[2] = 0.0;
+                for (int i=0; i<coord.length - 1; i++) {
+                    String[] s = coord[i].split("[^0-9.]");
+                    double decimal = Double.parseDouble(s[0]) + Double.parseDouble(s[1])/60;
+                    String direction = coord[i].substring(coord[i].length()-1);
+                    if (direction.equals("S") || direction.equals("W")) {
+                        decimal = -decimal;
+                    }
+                    convertedCoord[i] = decimal;
+                }
+                return convertedCoord;
+            }
+        }
     }
 }

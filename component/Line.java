@@ -7,12 +7,12 @@ public class Line {
     private String label;
 
     public Line() {
-        list = new ArrayList<Point>();
+        list = new ArrayList<>();
         label = "";
     }
 
     public Line(String label) {
-        list = new ArrayList<Point>();
+        list = new ArrayList<>();
         this.label = label;
     }
 

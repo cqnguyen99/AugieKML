@@ -11,7 +11,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 public class ReadingDriver {
-    public static void main(String[] args) throws FileNotFoundException, XMLStreamException {
+    public static void main(String[] args) throws FileNotFoundException, XMLStreamException, IOException {
         // Read the input kml file
         System.out.print("Enter the KML file: ");
         Scanner input = new Scanner(System.in);
@@ -71,9 +71,11 @@ public class ReadingDriver {
                 }
             }
         }
-        System.out.println(points);
-        System.out.println(lines);
-        System.out.println(polygons);
+        // System.out.println(points);
+        // System.out.println(lines);
+        // System.out.println(polygons);
+
+        outputToText(points, lines, polygons);
         input.close();
     }
 
@@ -174,5 +176,26 @@ public class ReadingDriver {
                 return convertedCoord;
             }
         }
+    }
+
+    public static void outputToText(List<Point> points, List<Line> lines, List<Polygon> polygons) throws FileNotFoundException, IOException {
+        System.out.print("Name of the text output file: ");
+        Scanner input = new Scanner(System.in);
+        String file = input.next();
+        FileWriter writer = new FileWriter(file); 
+        writer.write("Point" + "\n");
+        for (Point p: points) {
+            writer.write(p + System.lineSeparator());
+        }
+        writer.write("Line" + "\n");
+        for (Line l: lines) {
+            writer.write(l + System.lineSeparator());
+        }
+        writer.write("Polygon" + "\n");
+        for (Polygon po: polygons) {
+            writer.write(po + System.lineSeparator());
+        }
+        writer.close();
+        input.close();
     }
 }
