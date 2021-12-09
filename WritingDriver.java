@@ -8,11 +8,6 @@ import javax.xml.transform.TransformerException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-// import javax.xml.transform.OutputKeys;
-// import javax.xml.transform.Transformer;
-// import javax.xml.transform.TransformerFactory;
-// import javax.xml.transform.stream.StreamResult;
-// import javax.xml.transform.stream.StreamSource;
 
 public class WritingDriver {
     public static void main(String[] args) {
@@ -62,26 +57,31 @@ public class WritingDriver {
                 cur = scan.nextLine();
             }
             else cur = temp;
+
             // Check if it is a point, add coordinates to the points list
             if (cur.equalsIgnoreCase("point")) {
-                String label = scan.nextLine();
-                String[] coord = scan.nextLine().split("\\s");
-                Double[] newCoord = convertToDecimal(coord);
+                String label = scan.nextLine();                     // Label of the point
+                String[] coord = scan.nextLine().split("\\s");      // Read longitude, latitude, altitude
+                Double[] newCoord = convertToDecimal(coord);        // Convert different coordinates' types (DMS, DDM, DD) to DD type
+
+                // If the longitude and latitude are valid , add coordinates to list of points
                 if (checkValidPoint(newCoord)) {
                     Point point = new Point(label, newCoord[0], newCoord[1], newCoord[2]);
                     points.add(point);
                 }
                 temp = scan.nextLine();
             }
+
             // Check if it is a line, add coordinates to the lines list
             else if (cur.equalsIgnoreCase("line")) {
                 Line l = new Line();
-                // Set label of line
-                l.setLabel(scan.nextLine());
+                l.setLabel(scan.nextLine());            // Set label of line
+
                 while (scan.hasNextLine()) {
                     temp = scan.nextLine();
                     String[] coord = temp.split("\\s");
-                    if (coord.length == 3) {
+
+                    if (coord.length == 3) {            // Check if the nextLine consists of coordinates
                         Double[] newCoord = convertToDecimal(coord);
                         if (checkValidPoint(newCoord)) {
                             Point lp = new Point(newCoord[0], newCoord[1], newCoord[2]);
@@ -92,14 +92,16 @@ public class WritingDriver {
                 }
                 lines.add(l);
             }
+
             // Check if it is a polygon, add coordinates to the polygon list
             else if (cur.equalsIgnoreCase("polygon")) {
                 Polygon poly = new Polygon();
-                // Set label of polygon
-                poly.setLabel(scan.nextLine());
+                poly.setLabel(scan.nextLine());             // Set label of polygon
+
                 while (scan.hasNextLine()) {
                     temp = scan.nextLine();
                     String[] coord = temp.split("\\s");
+
                     if (coord.length == 3) {
                         Double[] newCoord = convertToDecimal(coord);
                         if (checkValidPoint(newCoord)) {
@@ -109,11 +111,13 @@ public class WritingDriver {
                     }
                     else break;
                 }
-                // Check if the polygon has the innerboudary
+
+                // Check if the polygon has the inner boudary
                 if (temp.equalsIgnoreCase("inner boundary")) {
                     while (scan.hasNextLine()) {
                         temp = scan.nextLine();
                         String[] coord = temp.split(" ");
+
                         if (coord.length == 3) {
                             Double[] newCoord = convertToDecimal(coord);
                             if (checkValidPoint(newCoord)) {

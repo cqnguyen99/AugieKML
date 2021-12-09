@@ -14,17 +14,8 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 public class Write {
-    // private List<Point> points;
-    // private List<Line> lines;
-    // private List<Polygon> polygons;
 
     private static final String NS_KML = "http://www.opengis.net/kml/2.2";
-
-    // public Write(List<Point> points, List<Line> lines, List<Polygon> polygons) {
-    //     this.points = points;
-    //     this.lines = lines;
-    //     this.polygons = polygons;
-    // }
     
     public static void writeKml(OutputStream out, List<Point> points, List<Line> lines, List<Polygon> polygons) throws XMLStreamException {
 

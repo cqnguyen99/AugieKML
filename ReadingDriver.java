@@ -71,11 +71,10 @@ public class ReadingDriver {
                 }
             }
         }
-        // System.out.println(points);
-        // System.out.println(lines);
-        // System.out.println(polygons);
 
+        // Write points, lines, polygons to a text file
         outputToText(points, lines, polygons);
+
         input.close();
     }
 
@@ -85,6 +84,7 @@ public class ReadingDriver {
         if(newCoords.size() == 1) {         // Point
             String[] coord = newCoords.get(0).split(",");
             Double[] newCoord = convertToDecimal(coord);    // Convert different coordinates' types (DMS, DDM, DD) to DD type
+            
             // If the longitude and latitude are valid , add coordinates to list of points 
             if (checkValidPoint(newCoord)) {
                 Point point = new Point(newCoord[0], newCoord[1], newCoord[2]);
@@ -178,23 +178,32 @@ public class ReadingDriver {
         }
     }
 
+    // Write points, lines, polygons to a text file 
     public static void outputToText(List<Point> points, List<Line> lines, List<Polygon> polygons) throws FileNotFoundException, IOException {
         System.out.print("Name of the text output file: ");
         Scanner input = new Scanner(System.in);
         String file = input.next();
-        FileWriter writer = new FileWriter(file); 
+
+        FileWriter writer = new FileWriter(file);
+
+        // Write list of points
         writer.write("Point" + "\n");
         for (Point p: points) {
             writer.write(p + System.lineSeparator());
         }
+
+        // Write list of lines
         writer.write("Line" + "\n");
         for (Line l: lines) {
             writer.write(l + System.lineSeparator());
         }
+
+        // Write list of polygons
         writer.write("Polygon" + "\n");
         for (Polygon po: polygons) {
             writer.write(po + System.lineSeparator());
         }
+
         writer.close();
         input.close();
     }
