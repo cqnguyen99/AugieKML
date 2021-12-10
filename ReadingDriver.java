@@ -15,9 +15,7 @@ public class ReadingDriver {
     // The program will read any valid KML file and output all points, lines, and polygons to a new text file
     public static void main(String[] args) throws FileNotFoundException, XMLStreamException, IOException {
         // Read the input kml file
-        System.out.print("Enter the KML file: ");
-        Scanner input = new Scanner(System.in);
-        File file = new File(input.nextLine());
+        File file = new File(args[0]);
 
         // Instance of the class which helps on reading tags
         XMLInputFactory factory = XMLInputFactory.newFactory();
@@ -75,9 +73,7 @@ public class ReadingDriver {
         }
 
         // Write points, lines, polygons to a text file
-        outputToText(points, lines, polygons);
-
-        input.close();
+        outputToText(args[0], points, lines, polygons);
     }
 
     // Add coordinates from List<String> to Lists of points, lines, and polygons
@@ -181,17 +177,20 @@ public class ReadingDriver {
     }
 
     // Write points, lines, polygons to a text file 
-    public static void outputToText(List<Point> points, List<Line> lines, List<Polygon> polygons) throws FileNotFoundException, IOException {
-        System.out.print("Name of the text output file: ");
-        Scanner input = new Scanner(System.in);
-        String file = input.next();
+    public static void outputToText(String file, List<Point> points, List<Line> lines, List<Polygon> polygons) throws FileNotFoundException, IOException {
+        // Output file path
+        // The output kml file will be stored in the same folder and have the same name as the input text file
+        String fileName = file.replace(".kml", ".txt");
+        String p = System.getProperty("user.dir");
+        FileWriter fw = new FileWriter(p + File.separator + fileName);
+        String path = p + File.separator + fileName;
 
         FileWriter writer = new FileWriter(file);
 
         // Write list of points
         writer.write("Point" + "\n");
-        for (Point p: points) {
-            writer.write(p + System.lineSeparator());
+        for (Point point: points) {
+            writer.write(point + System.lineSeparator());
         }
         writer.write("\n");
         // Write list of lines
@@ -207,6 +206,5 @@ public class ReadingDriver {
         }
 
         writer.close();
-        input.close();
     }
 }

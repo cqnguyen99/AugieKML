@@ -22,11 +22,11 @@ public class WritingDriver {
             readTxtTest(args[0], points, lines, polygons);
 
             // Output file path
-            System.out.print("Name of the KML output file: ");
-            String fileName = input.nextLine();
+            // The output kml file will be stored in the same folder and have the same name as the input text file
+            String fileName = args[0].replace(".txt", ".kml");
             String p = System.getProperty("user.dir");
-            FileWriter fw = new FileWriter(p + File.separator + fileName + ".kml");
-            String path = p + File.separator + fileName + ".kml";
+            FileWriter fw = new FileWriter(p + File.separator + fileName);
+            String path = p + File.separator + fileName;
 
             // Output stream
             ByteArrayOutputStream out = new ByteArrayOutputStream();

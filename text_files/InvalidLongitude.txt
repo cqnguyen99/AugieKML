@@ -1,3 +1,0 @@
-point
-invalid long
-200.0 43.5229 0.0
