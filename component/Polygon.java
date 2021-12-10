@@ -48,9 +48,7 @@ public class Polygon
         if (innerBoundary.isEmpty()) {
             return false;
         }
-        else {
-            return true;
-        }
+        return true;
     }
     
     public boolean isOuterEmpty() {

@@ -11,6 +11,8 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 public class ReadingDriver {
+
+    // The program will read any valid KML file and output all points, lines, and polygons to a new text file
     public static void main(String[] args) throws FileNotFoundException, XMLStreamException, IOException {
         // Read the input kml file
         System.out.print("Enter the KML file: ");
@@ -191,13 +193,13 @@ public class ReadingDriver {
         for (Point p: points) {
             writer.write(p + System.lineSeparator());
         }
-
+        writer.write("\n");
         // Write list of lines
         writer.write("Line" + "\n");
         for (Line l: lines) {
             writer.write(l + System.lineSeparator());
         }
-
+        writer.write("\n");
         // Write list of polygons
         writer.write("Polygon" + "\n");
         for (Polygon po: polygons) {
