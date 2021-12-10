@@ -179,32 +179,30 @@ public class ReadingDriver {
     // Write points, lines, polygons to a text file 
     public static void outputToText(String file, List<Point> points, List<Line> lines, List<Polygon> polygons) throws FileNotFoundException, IOException {
         // Output file path
-        // The output kml file will be stored in the same folder and have the same name as the input text file
+        // The output kml file will be stored in the same folder and have the same name as the input kml file
         String fileName = file.replace(".kml", ".txt");
         String p = System.getProperty("user.dir");
         FileWriter fw = new FileWriter(p + File.separator + fileName);
-        String path = p + File.separator + fileName;
-
-        FileWriter writer = new FileWriter(file);
+        //String path = p + File.separator + fileName;
 
         // Write list of points
-        writer.write("Point" + "\n");
+        fw.write("Point" + "\n");
         for (Point point: points) {
-            writer.write(point + System.lineSeparator());
+            fw.write(point + System.lineSeparator());
         }
-        writer.write("\n");
+        fw.write("\n");
         // Write list of lines
-        writer.write("Line" + "\n");
+        fw.write("Line" + "\n");
         for (Line l: lines) {
-            writer.write(l + System.lineSeparator());
+            fw.write(l + System.lineSeparator());
         }
-        writer.write("\n");
+        fw.write("\n");
         // Write list of polygons
-        writer.write("Polygon" + "\n");
+        fw.write("Polygon" + "\n");
         for (Polygon po: polygons) {
-            writer.write(po + System.lineSeparator());
+            fw.write(po + System.lineSeparator());
         }
 
-        writer.close();
+        fw.close();
     }
 }
