@@ -70,7 +70,7 @@ public class Polygon
     public int findInnerPoint(Point polyP){
         return innerBoundary.indexOf(polyP);
     }
-
+    
     public void clearAll() {
         outerBoundary.clear();
         innerBoundary.clear();

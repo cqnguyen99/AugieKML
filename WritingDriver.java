@@ -70,7 +70,7 @@ public class WritingDriver {
                     Point point = new Point(label, newCoord[0], newCoord[1], newCoord[2]);
                     points.add(point);
                 }
-                temp = scan.nextLine();
+                if (scan.hasNextLine()) temp = scan.nextLine();
             }
 
             // Check if it is a line, add coordinates to the lines list
@@ -98,12 +98,15 @@ public class WritingDriver {
             else if (cur.equalsIgnoreCase("polygon")) {
                 Polygon poly = new Polygon();
                 poly.setLabel(scan.nextLine());             // Set label of polygon
+                List<String> allCoords = new ArrayList<>();
+                List<String> innerCoords = new ArrayList<>();
 
                 while (scan.hasNextLine()) {
                     temp = scan.nextLine();
                     String[] coord = temp.split("\\s");
 
                     if (coord.length == 3) {
+                        allCoords.add(arrayToString(coord));
                         Double[] newCoord = convertToDecimal(coord);
                         if (checkValidPoint(newCoord)) {
                             Point op = new Point(newCoord[0], newCoord[1], newCoord[2]);
@@ -115,10 +118,13 @@ public class WritingDriver {
 
                 // Check if the polygon has the inner boudary
                 if (temp.equalsIgnoreCase("inner boundary")) {
+
                     while (scan.hasNextLine()) {
                         temp = scan.nextLine();
                         String[] coord = temp.split("\\s");
+
                         if (coord.length == 3) {
+                            innerCoords.add(arrayToString(coord));
                             Double[] newCoord = convertToDecimal(coord);
                             if (checkValidPoint(newCoord)) {
                                 Point ip = new Point(newCoord[0], newCoord[1], newCoord[2]);
@@ -128,7 +134,12 @@ public class WritingDriver {
                         else break;
                     }
                 }
-                polygons.add(poly);
+
+                // Check if a polygon is a closed shape
+                if (!allCoords.get(0).equals(allCoords.get(allCoords.size() - 1)) || (!innerCoords.isEmpty() && !innerCoords.get(0).equals(innerCoords.get(innerCoords.size() - 1)))) {
+                    poly.clearAll();
+                }
+                else polygons.add(poly);
             }
         }
         scan.close();
@@ -186,5 +197,14 @@ public class WritingDriver {
                 return convertedCoord;
             }
         }
+    }
+
+    // Convert from String[] to String
+    public static String arrayToString(String[] arr) {
+        String result = "";
+        for (String s: arr) {
+            result += s;
+        }
+        return result;
     }
 }
