@@ -138,6 +138,7 @@ public class WritingDriver {
                 // Check if a polygon is a closed shape
                 if (!allCoords.get(0).equals(allCoords.get(allCoords.size() - 1)) || (!innerCoords.isEmpty() && !innerCoords.get(0).equals(innerCoords.get(innerCoords.size() - 1)))) {
                     poly.clearAll();
+                    System.out.println("This file contains an unclosed polygon.");
                 }
                 else polygons.add(poly);
             }
@@ -150,7 +151,10 @@ public class WritingDriver {
         if (coord[0] >= -180.0 && coord[0] <= 180.0 && coord[1] >= -90.0 && coord[1] <= 90.0) {
             return true;
         }
-        return false;
+        else {
+            System.out.println("This file contains an invalid coordinate.");
+            return false;
+        }
     }
 
     public static Double[] convertToDecimal(String[] coord) {
