@@ -32,7 +32,7 @@ public class Write {
 
         // No data to write
         if (points.isEmpty() && lines.isEmpty() && polygons.isEmpty()) {
-            System.out.println("There are no points, lines, or polygons.");
+            System.out.println("There are no valid points, lines, or polygons to write.");
             System.exit(0);
         }
 
